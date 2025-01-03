@@ -1,0 +1,16 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+psycopg2
+drf-spectacular
+django-cors-headers
+channels
+channels_redis
+daphne
+watchdog
+cloudinary
+django-cloudinary-storage
+python-decouple
+openpyxl
+django-celery-results   
+django-celery-email

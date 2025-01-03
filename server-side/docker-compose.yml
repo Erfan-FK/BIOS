@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"  # Django API
+      - "8001:8001"  # Daphne/WebSocket
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "
+        sleep 1 &&
+        python manage.py wait_for_db &&
+        python manage.py makemigrations --no-input &&
+        python manage.py migrate --no-input &&
+        python manage.py generate_sample_data &&
+        python manage.py runserver 0.0.0.0:8000 &
+        daphne -b 0.0.0.0 -p 8001 app.asgi:application
+      "
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+      - REDIS_HOST=redis
+      - DEBUG=True
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  dev-db-data:

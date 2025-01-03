@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: .
+      target: dev-stage 
+    command: npm run dev -- --host 
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
