@@ -44,6 +44,7 @@ Welcome to the **Bilkent Information Office System (BIOS)**, a robust web applic
   - Distribution of scholarships.
   - Tour attendance trends.
   - High school visitation frequency.
+  - Heatmap of the schools in Türkiye.
   - Other insightful metrics.
 - Interactive charts and graphs for enhanced decision-making.
 
